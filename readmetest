@@ -1,0 +1,275 @@
+//Altere a função hash2 da seguinte forma:
+
+public class HashFunction {
+
+    // Método hash2 conforme solicitado
+    public static int hash2(String chave, int valor, int tamanhoTabela) {
+        // Passo 2: Criar a variável soma do tipo inteiro
+        int soma = 0;
+
+        // Passo 3: Armazenar a soma acumulada de todos os caracteres da chave String
+        for (int i = 0; i < chave.length(); i++) {
+            soma += chave.charAt(i); // Adiciona o valor ASCII do caractere à soma
+        }
+
+        // Passo 4: Retornar a soma multiplicada pelo valor, módulo do tamanho da tabela
+        return (soma * valor) % tamanhoTabela;
+    }
+
+    // Método principal para testar a função
+    public static void main(String[] args) {
+        String chave = "exemplo";
+        int valor = 3;
+        int tamanhoTabela = 10;
+
+        int resultado = hash2(chave, valor, tamanhoTabela);
+        System.out.println("Resultado da função hash2: " + resultado);
+    }
+}
+
+____________________________
+//variavel do tipo inteiro contador
+
+public class BubbleSort {
+
+    // Método bubbleSort conforme solicitado
+    public static void bubbleSort(int[] arr) {
+        int n = arr.length;
+        // Passo 2: Inicializa a variável contador com 0
+        int contador = 0;
+
+        // Algoritmo Bubble Sort
+        boolean trocou;
+        do {
+            trocou = false; // Inicializa a variável trocou como falsa
+            for (int i = 0; i < n - 1; i++) {
+                // Compara elementos adjacentes
+                if (arr[i] > arr[i + 1]) {
+                    // Troca os elementos
+                    int temp = arr[i];
+                    arr[i] = arr[i + 1];
+                    arr[i + 1] = temp;
+
+                    // Passo 3: Adiciona 1 ao contador
+                    contador++;
+                    trocou = true; // Indica que uma troca ocorreu
+                }
+            }
+            n--; // Reduz o tamanho do vetor para otimização
+        } while (trocou); // Continua enquanto houver trocas
+
+        // Passo 4: Imprime a quantidade total de trocas
+        System.out.println("Trocas: " + contador);
+    }
+
+    // Método principal para testar a função
+    public static void main(String[] args) {
+        int[] arr = {64, 34, 25, 12, 22, 11, 90};
+
+        System.out.println("Array original:");
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+
+        bubbleSort(arr); // Chama o método bubbleSort
+
+        System.out.println("Array ordenado:");
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+    }
+}
+
+____________________________
+//
+Classe abstrata TabelaHash
+abstract class TabelaHash {
+    protected int tamanho;
+
+    // Construtor para definir o tamanho da tabela
+    public TabelaHash(int tamanho) {
+        this.tamanho = tamanho;
+    }
+
+    // Método abstrato rehashing
+    public abstract int rehashing(String chave);
+}
+
+// Classe Hash1 que estende TabelaHash
+class Hash1 extends TabelaHash {
+
+    public Hash1(int tamanho) {
+        super(tamanho);
+    }
+
+    // Implementação do método rehashing
+    @Override
+    public int rehashing(String chave) {
+        int soma = 0;
+        for (int i = 0; i < chave.length(); i++) {
+            soma += chave.charAt(i); // Soma os valores ASCII dos caracteres
+        }
+        return soma % tamanho; // Retorna a soma módulo do tamanho
+    }
+}
+
+// Classe Hash2 que estende TabelaHash
+class Hash2 extends TabelaHash {
+
+    public Hash2(int tamanho) {
+        super(tamanho);
+    }
+
+    // Implementação do método rehashing
+    @Override
+    public int rehashing(String chave) {
+        if (chave.length() == 0) {
+            return 0; // Se a chave estiver vazia, retorna 0
+        }
+        return (chave.charAt(0) * 3) % tamanho; // Retorna o valor do primeiro caractere * 3 módulo do tamanho
+    }
+}
+
+// Classe principal para testar as implementações
+public class Main {
+    public static void main(String[] args) {
+        TabelaHash hash1 = new Hash1(10);
+        TabelaHash hash2 = new Hash2(10);
+
+        String chave1 = "exemplo";
+        String chave2 = "teste";
+
+        System.out.println("Hash1 rehashing para 'exemplo': " + hash1.rehashing(chave1));
+        System.out.println("Hash2 rehashing para 'teste': " + hash2.rehashing(chave2));
+    }
+}
+
+
+____________________________
+
+// Classe abstrata TabelaHash
+abstract class TabelaHash {
+    protected int tamanho;
+
+    // Construtor para definir o tamanho da tabela
+    public TabelaHash(int tamanho) {
+        this.tamanho = tamanho;
+    }
+
+    // Método abstrato rehashing
+    public abstract int rehashing(String chave);
+}
+
+// Classe Hash1 que estende TabelaHash
+class Hash1 extends TabelaHash {
+
+    public Hash1(int tamanho) {
+        super(tamanho);
+    }
+
+    // Implementação do método rehashing com as alterações solicitadas
+    @Override
+    public int rehashing(String chave) {
+        // Passo 1: Criar uma variável inteira chamada valor
+        int valor;
+
+        // Passo 2: Armazenar na variável valor o valor do caractere na posição 3
+        // Verifica se a chave tem pelo menos 4 caracteres
+        if (chave.length() < 4) {
+            throw new IllegalArgumentException("A chave deve ter pelo menos 4 caracteres.");
+        }
+        valor = chave.charAt(3); // Armazena o valor do caractere na posição 3
+
+        // Passo 3: Verificar se o valor armazenado é par
+        if (valor % 2 == 0) {
+            // Passo 4: Se for par, imprime valor + 2 e retorna valor + 2
+            System.out.println("Valor (par): " + (valor + 2));
+            return valor + 2;
+        } else {
+            // Passo 5: Caso contrário, imprime valor e retorna valor + 1
+            System.out.println("Valor (ímpar): " + valor);
+            return valor + 1;
+        }
+    }
+}
+
+// Classe Hash2 para completar a estrutura
+class Hash2 extends TabelaHash {
+
+    public Hash2(int tamanho) {
+        super(tamanho);
+    }
+
+    @Override
+    public int rehashing(String chave) {
+        if (chave.length() == 0) {
+            return 0; // Se a chave estiver vazia, retorna 0
+        }
+        return (chave.charAt(0) * 3) % tamanho; // Retorna o valor do primeiro caractere * 3 módulo do tamanho
+    }
+}
+
+// Classe principal para testar as implementações
+public class Main {
+    public static void main(String[] args) {
+        TabelaHash hash1 = new Hash1(10);
+        
+        // Testando a função rehashing
+        String chave1 = "exemplo"; // O caractere na posição 3 é 'e' (101 em ASCII)
+        String chave2 = "teste";   // O caractere na posição 3 é 't' (116 em ASCII)
+
+        System.out.println("Rehashing para 'exemplo': " + hash1.rehashing(chave1)); // Esperado: 103 (par)
+        System.out.println("Rehashing para 'teste': " + hash1.rehashing(chave2));   // Esperado: 116 (par)
+    }
+}
+
+
+
+____________________________
+
+import java.util.Arrays;
+
+public class InsertionSort {
+
+    // Método principal
+    public static void main(String[] args) {
+        int[] original = {7, 12, 35, 1, 29, 17, 20}; // Vetor original
+
+        System.out.println("Vetor original:");
+        System.out.println(Arrays.toString(original)); // Imprime o vetor original
+
+        // Chama o método insertionSort
+        int[] ordenado = insertionSort(original);
+
+        // Imprime o vetor ordenado
+        System.out.println("Vetor ordenado:");
+        System.out.println(Arrays.toString(ordenado)); // Imprime o vetor ordenado
+    }
+
+    // Método para realizar o Insertion Sort
+    public static int[] insertionSort(int[] vetor) {
+        // Passo 1: Criar um vetor de inteiros chamado ordenado
+        int[] ordenado = vetor.clone(); // Passo 2: Copiar os valores do vetor recebido
+
+        // Passo 3: Alterar a lógica da função para que ordene os valores do vetor ordenado
+        for (int i = 1; i < ordenado.length; i++) {
+            int chave = ordenado[i];
+            int j = i - 1;
+
+            // Move os elementos de ordenado[0..i-1], que são maiores que chave,
+            // para uma posição à frente de sua posição atual
+            while (j >= 0 && ordenado[j] > chave) {
+                ordenado[j + 1] = ordenado[j];
+                j = j - 1;
+            }
+            ordenado[j + 1] = chave; // Coloca a chave na posição correta
+        }
+
+        // Passo 4: Imprimir o vetor original e o vetor ordenado
+        System.out.println("Vetor original (não ordenado): " + Arrays.toString(vetor));
+        System.out.println("Vetor ordenado: " + Arrays.toString(ordenado));
+
+        return ordenado; // Retorna o vetor ordenado
+    }
+}
